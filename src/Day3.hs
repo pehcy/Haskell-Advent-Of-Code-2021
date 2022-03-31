@@ -29,8 +29,8 @@ getO2 xs = go xs 0
 	where
 		f n xs' = filter ((== groupNth n xs') . (!! n)) xs'
 		go xs' n
-			| length xs' /= 1 	= go (f n xs') (n+1)
-			| otherwise 		= xs'
+		    | length xs' /= 1 	= go (f n xs') (n+1)
+		    | otherwise 	= xs'
 
 getCO2 :: [[Char]] -> [[Char]]
 getCO2 xs = go xs 0
@@ -38,16 +38,16 @@ getCO2 xs = go xs 0
 		f n xs' = filter ((== flip' (groupNth n xs')) . (!! n)) xs'
 		flip' c	= head . show $ xor (digitToInt c) 1
 		go xs' n
-			| length xs' /= 1	= go (f n xs') (n+1)
-			| otherwise = xs'
+		    | length xs' /= 1	= go (f n xs') (n+1)
+		    | otherwise 	= xs'
 
 epsilon :: [Char] -> [Char]
 epsilon [] = ""
 epsilon a = let 
-				repl '0' = '1'
- 				repl '1' = '0'
-				repl _ = '\00'
- 			in map repl a
+		repl '0' = '1'
+ 		repl '1' = '0'
+		repl _ = '\00'
+ 	    in map repl a
 
 convert2Dec :: [Int] -> Int
 convert2Dec [] = 0
