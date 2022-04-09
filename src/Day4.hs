@@ -54,6 +54,11 @@ newtype Matrix a = Matrix [[a]]
 instance Functor Matrix where 
   fmap f (Matrix xss) = Matrix (map (map f) xss)
 
+-- get Row, Column Vector
+getRow, getCol :: Matrix a -> Int -> [a]
+getCol (Matrix mat) n = mat >>= ((:[]) . (!! n))
+getRow (Matrix mat) n = mat !! n
+
 {---------------------------------------------------------------
 fold reduces a list into a single value, 
 while unfold generates a list from a given seed value
