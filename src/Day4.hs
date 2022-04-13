@@ -1,6 +1,7 @@
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE FlexibleContexts #-}
 module Main where
+import Matrix ( Matrix(..) )
 import Data.Function (on)
 import Data.List (groupBy, unfoldr)
 import Control.Applicative (Applicative(liftA2))
