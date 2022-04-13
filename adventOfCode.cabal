@@ -15,6 +15,16 @@ build-type:          Simple
 extra-source-files:  CHANGELOG.md
 cabal-version:       >=1.10
 
+common shared-properties
+  default-language:   Haskell2010
+  ghc-options:        -Wall -O2
+
+library
+  import:              shared-properties
+  exposed-modules:     Matrix
+  build-depends:       base >=4.12 && <4.13
+  hs-source-dirs:      src
+
 executable adventOfCode
   main-is:             Main.hs
   -- other-modules:
@@ -22,3 +32,11 @@ executable adventOfCode
   build-depends:       base >=4.12 && <4.13
   hs-source-dirs:      src
   default-language:    Haskell2010
+
+executable day4solution
+  import:             shared-properties
+  main-is:            Day4.hs
+  other-modules:      Matrix
+  build-depends:      base >= 4.12 && <4.13
+  hs-source-dirs:     app, src
+  ghc-options:        -main-is Day4
