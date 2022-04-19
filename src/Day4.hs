@@ -1,6 +1,6 @@
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE FlexibleContexts #-}
-module Day2 where
+module Day4 where
 import Matrix ( Matrix(..), Coord(..) )
 import Data.Function (on)
 import Data.List (groupBy, unfoldr, group, elemIndex)
