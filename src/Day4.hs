@@ -1,7 +1,7 @@
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE FlexibleContexts #-}
 module Day4 where
-import Matrix ( Matrix(..), Coord(..) )
+import Matrix (Coord(..), Bingo(..), getFinalScore )
 import Data.Function (on)
 import Data.List (groupBy, unfoldr, group, elemIndex)
 import Data.Maybe (mapMaybe)
@@ -20,13 +20,12 @@ The `elem` function only tell us whether some element is
 part of a list, but not where it is. So the result is a `Maybe` monad.
 Here I import the standard library to map Monad into the final result.
 -}
--- getBingo :: (Foldable t, Eq a, Functor g) => t a -> g [[a]] -> g [(Int, Int)]
 checkBingo guess boards = let
         matches = checkMatches guess <$> boards
         xlist = f' (x .:^ matches)
         ylist = f' (y .:^ matches)
-        xAt = if g' xlist `setEq` [] then [] else mapMaybe (`elemIndex` xlist) (g' xlist)
-        yAt = if g' ylist `setEq` [] then [] else mapMaybe (`elemIndex` ylist) (g' ylist)
+        xAt = if null (g' xlist) then [] else mapMaybe (`elemIndex` xlist) (g' xlist)
+        yAt = if null (g' ylist) then [] else mapMaybe (`elemIndex` ylist) (g' ylist)
         in xAt `merge` yAt
         where   f' xs = (\x -> (head x, length x))
                         .:^ (group <$> xs)
@@ -42,12 +41,17 @@ main = do
   let content = lines fileLines
   let guess = num2Int <$> wordsWhen ((==',')<||>(==' ')) (head content)
   let boards = toMatrix $ fmap words <$> sep content
-  let num = last $ takeUntil (\x -> not (checkBingo (take x guess) boards `setEq` [])) [0..]
+  let stopAt = last $ takeUntil (\x -> not (checkBingo (take x guess) boards `setEq` [])) [0..]
+  let nth = head $ checkBingo (take stopAt guess) boards
+  let result = getFinalScore 
+        (Bingo nth (guess !! subtract 1 stopAt) (take stopAt guess))
+        guess
+        boards
   -- let list = head 
   --     $ dropWhile (setEq []) 
   --      $ flip checkBingo boards 
   --      . flip take guess <$> [1..]
-  return (checkBingo (take 18 guess) boards)
+  return result
 
 enumerate :: [b] -> [(Int, b)]
 enumerate = zip [0..]
