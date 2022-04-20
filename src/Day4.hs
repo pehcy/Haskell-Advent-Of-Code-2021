@@ -65,13 +65,13 @@ checkMatches drawn tiles = [
 num2Int :: String -> Int
 num2Int xs = read xs :: Int
 
-{---------------------------------------------------------------
+{-
 fold reduces a list into a single value, 
 while unfold generates a list from a given seed value
--}
+Eg:
 --chunk :: Int -> [a] -> [[a]]
 --chunk n = unfoldr (\xs -> if null xs then Nothing else Just (splitAt n xs))
-----------------------------------------------------------------}
+-}
 sep :: [a] -> [[a]]
 sep xs = fmap tail (chunk 6 $ drop 1 xs)
         where chunk n = unfoldr (\xs -> if null xs then Nothing else Just (splitAt n xs))
@@ -90,11 +90,11 @@ repeatMap f n = go f n
 (<&&>) = liftA2 (&&)
 (<||>) = liftA2 (||)
 
-{---------------------------------------------------------------
+{-
 To break comma for string, replace p by ((==',')<||>(==' '))
 >> wordsWhen ((==',') <||> (==' ')) "foo, bar, snoo" 
  ["foo", "bar", "snoo"]
-----------------------------------------------------------------}
+-}
 wordsWhen :: (Char -> Bool) -> [Char] -> [[Char]]
 wordsWhen p s = case dropWhile p s of
                   "" -> []
